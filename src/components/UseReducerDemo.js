@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment, useReducer } from 'react';
 import axios from 'axios';
+import ContextDemo from './ContextDemo'
 
 export default function UseReducer() {
   const [query, setQuery] = useState('redux');
@@ -83,7 +84,7 @@ export default function UseReducer() {
 
   return (
     <Fragment>
-      
+
       {/* only useState  */}
       {/* <form
         onSubmit={(event) => {
@@ -144,6 +145,7 @@ export default function UseReducer() {
           })}
         </ul>
       )}
+      show theme: <ContextDemo />
     </Fragment>
   );
 }

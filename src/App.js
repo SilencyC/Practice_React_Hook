@@ -1,4 +1,5 @@
-import React, { useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
+import ThemeContect from './context';
 import UseReducerDemo from './components/UseReducerDemo';
 
 const App = () => {
@@ -9,12 +10,18 @@ const App = () => {
     isError: '',
   };
   const [state, dispatch] = useReducer(dataFetchReducer, defalutState);
+
+  const [theme, setTheme] = useState('light')
+
   console.log(state);
-  
+
   return (
-    <div>
-      <UseReducerDemo></UseReducerDemo>
-    </div>
+    <ThemeContect.Provider value={theme}>
+      <div>
+        <UseReducerDemo></UseReducerDemo>
+        <button onClick={() => setTheme('wwww')}>change theme</button>
+      </div>
+    </ThemeContect.Provider>
   );
 };
 
