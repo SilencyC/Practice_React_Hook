@@ -3,6 +3,8 @@ import axios from 'axios';
 
 export default function UseReducer() {
   const [query, setQuery] = useState('redux');
+
+  //only useState custom hook
   // const [{ data, isLoading, isError }, setUrl] = useCustomHook(
   //   'https://hn.algolia.com/api/v1/search?query=redux',
   //   {
@@ -81,6 +83,8 @@ export default function UseReducer() {
 
   return (
     <Fragment>
+      
+      {/* only useState  */}
       {/* <form
         onSubmit={(event) => {
           event.preventDefault();
