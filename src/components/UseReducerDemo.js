@@ -37,7 +37,7 @@ export default function UseReducer() {
 
   //useReducer
   const useDataApi = (initialUrl, initialData) => {
-    const [url, setUrl] = useState(initialUrl);
+    const [url, setUrl] = useState(() => initialUrl);
 
     const defalutState = {
       data: initialData,
@@ -48,16 +48,25 @@ export default function UseReducer() {
     const [state, dispatch] = useReducer(dataFetchReducer, defalutState);
 
     useEffect(() => {
+      let didCancle = false;
       const fatchData = async () => {
         dispatch({ type: 'FETCH_INIT' });
         try {
           const result = await axios(url);
-          dispatch({ type: 'SET_DATA', payload: result.data });
+          if (!didCancle) {
+            dispatch({ type: 'SET_DATA', payload: result.data });
+          }
         } catch (event) {
-          dispatch({ type: 'FETCH_FAILURE' });
+          if (!didCancle) {
+            dispatch({ type: 'FETCH_FAILURE' });
+          }
         }
       };
       fatchData();
+
+      return () => {
+        didCancle = true;
+      }
     }, [url]);
 
     return [state, setUrl];
@@ -70,11 +79,8 @@ export default function UseReducer() {
     }
   );
 
-  console.log('state::', state);
-
   return (
     <Fragment>
-      
       {/* <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -107,7 +113,9 @@ export default function UseReducer() {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          setUrl(`https://hn.algolia.com/api/v1/search?query=${query}`);
+          setUrl(() => {
+            return `https://hn.algolia.com/api/v1/search?query=${query}`;
+          });
         }}
       >
         <input
